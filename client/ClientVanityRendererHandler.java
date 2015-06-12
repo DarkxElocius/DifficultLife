@@ -1,11 +1,9 @@
 package difficultLife.client;
 
-import java.util.Arrays;
 import java.util.Hashtable;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import difficultLife.utils.DLSaveStorage;
 import difficultLife.utils.InventoryVanityArmor;
@@ -14,7 +12,6 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -22,7 +19,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel;
 
 public class ClientVanityRendererHandler {
 	
-	public Hashtable<String,InventoryVanityArmor> playersInventory = new Hashtable();
+	public Hashtable<String,InventoryVanityArmor> playersInventory = new Hashtable<String, InventoryVanityArmor>();
 	public InventoryVanityArmor vanityInventory;
 	public int aort;
 	

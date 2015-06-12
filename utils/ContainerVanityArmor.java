@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import baubles.api.BaubleType;
-import baubles.api.IBauble;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -104,16 +103,16 @@ public class ContainerVanityArmor extends Container
         {
         	if(Loader.isModLoaded("Baubles"))
         	{
-        		Class SlotBauble = Class.forName("baubles.common.container.SlotBauble");
-        		Constructor sbc = SlotBauble.getConstructor(IInventory.class, BaubleType.class, int.class, int.class, int.class);
+        		Class<?> SlotBauble = Class.forName("baubles.common.container.SlotBauble");
+        		Constructor<?> sbc = SlotBauble.getConstructor(IInventory.class, BaubleType.class, int.class, int.class, int.class);
         		
-        		Class InventoryBaubles = Class.forName("baubles.common.container.InventoryBaubles");
+        		Class<?> InventoryBaubles = Class.forName("baubles.common.container.InventoryBaubles");
         		baubles = IInventory.class.cast(InventoryBaubles.getConstructor(EntityPlayer.class).newInstance(player));
         		InventoryBaubles.getMethod("setEventHandler", Container.class).invoke(baubles, this);
         		if(!player.worldObj.isRemote)
         		{
         			 Field stackList = InventoryBaubles.getField("stackList");
-        			 Class PlayerHandler = Class.forName("baubles.common.lib.PlayerHandler");
+        			 Class<?> PlayerHandler = Class.forName("baubles.common.lib.PlayerHandler");
         			 stackList.set(baubles, stackList.get(PlayerHandler.getMethod("getPlayerBaubles", EntityPlayer.class).invoke(null, player)));
         		}
 		        addSlotToContainer(Slot.class.cast(sbc.newInstance(baubles, BaubleType.AMULET, 0, 98, 8)));
@@ -167,8 +166,8 @@ public class ContainerVanityArmor extends Container
         	{
         		try
         		{
-	        		Class PlayerHandler = Class.forName("baubles.common.lib.PlayerHandler");
-	        		Class InventoryBaubles = Class.forName("baubles.common.container.InventoryBaubles");
+	        		Class<?> PlayerHandler = Class.forName("baubles.common.lib.PlayerHandler");
+	        		Class<?> InventoryBaubles = Class.forName("baubles.common.container.InventoryBaubles");
 	        		Method setPlayerBaubles = PlayerHandler.getMethod("setPlayerBaubles", EntityPlayer.class, InventoryBaubles);
 	        		setPlayerBaubles.invoke(null, player,baubles);
         		}
@@ -191,7 +190,7 @@ public class ContainerVanityArmor extends Container
     	{
     		try
     		{
-    			Class InventoryBaubles = Class.forName("baubles.common.container.InventoryBaubles");
+    			Class<?> InventoryBaubles = Class.forName("baubles.common.container.InventoryBaubles");
     			Field blockEvents = InventoryBaubles.getField("blockEvents");
     			blockEvents.set(baubles, true);
     		}
@@ -203,10 +202,6 @@ public class ContainerVanityArmor extends Container
         super.putStacksInSlots(p_75131_1_);
     }
     
-    private void unequipBauble(ItemStack itemstack)
-    {
-    }
-
     protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4, Slot ss)
     {
         boolean flag1 = false;

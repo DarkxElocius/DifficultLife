@@ -10,6 +10,7 @@ import net.minecraft.client.resources.I18n;
 
 public class ClientGUIEventManager {
 	
+	@SuppressWarnings("unchecked")
 	@SubscribeEvent
     public void guiPostInit(net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent.Post event)
     {
@@ -47,7 +48,7 @@ public class ClientGUIEventManager {
         {
             if(isNEIHidden == null)
             {
-                Class fake = Class.forName("codechicken.nei.NEIClientConfig");
+                Class<?> fake = Class.forName("codechicken.nei.NEIClientConfig");
                 isNEIHidden = fake.getMethod("isHidden", new Class[0]);
             }
             hidden = ((Boolean)isNEIHidden.invoke(null, new Object[0])).booleanValue();
