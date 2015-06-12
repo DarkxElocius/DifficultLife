@@ -1,26 +1,17 @@
 package difficultLife.client;
 
 import java.lang.reflect.Field;
-import java.util.List;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
@@ -40,7 +31,7 @@ public class GuiVanityArmor extends InventoryEffectRenderer
     {
         try
         {
-			Class InventoryBaubles = Class.forName("baubles.common.container.InventoryBaubles");
+			Class<?> InventoryBaubles = Class.forName("baubles.common.container.InventoryBaubles");
 			Field blockEvents = InventoryBaubles.getField("blockEvents");
 			blockEvents.set(((ContainerVanityArmor)inventorySlots).baubles, true);
         }

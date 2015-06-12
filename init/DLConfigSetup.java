@@ -1,5 +1,9 @@
 package difficultLife.init;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.logging.log4j.Level;
 
 import cpw.mods.fml.common.FMLLog;
@@ -36,6 +40,8 @@ public class DLConfigSetup {
 	public static boolean DIFFICULTY_GUI_TOP;
 	public static int DIFFICULTY_GUI_HORISONTAL;
 	public static int DIFFICULTY_GUI_VERTICAL;
+	public static List<String> PERMITTED_FROM_BLIGHT = new ArrayList<String>();
+	public static List<String> PERMITTED_FROM_HP_INCREASEMENT = new ArrayList<String>();
 	
 	public static void setupCFG(Configuration cfg)
 	{
@@ -72,6 +78,8 @@ public class DLConfigSetup {
 			DIFFICULTY_GUI_HORISONTAL = cfg.getInt("horisontalOffset", Configuration.CATEGORY_GENERAL, 10, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount of offset for the difficuly GUI on the X axis.");
 			DIFFICULTY_GUI_VERTICAL = cfg.getInt("verticalOffset", Configuration.CATEGORY_GENERAL, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount of offset for the difficuly GUI on the Y axis.");
 			
+			PERMITTED_FROM_BLIGHT = Arrays.asList(cfg.get(Configuration.CATEGORY_GENERAL, "blightBlacklist", new String[]{"witchery.leonard","sheep"},"The blacklist for entities to be spawned as blights. Syntaxis is: modid.entityName").getStringList());
+			PERMITTED_FROM_HP_INCREASEMENT = Arrays.asList(cfg.get(Configuration.CATEGORY_GENERAL, "affectedBlacklist", new String[]{"witchery.leonard","essentialcraft3.ec3.common.entity.EntityMRUPresence"},"The blacklist for entities to be modified by DifficultLife. Syntaxis is: modid.entityName").getStringList());
 		}
 		catch(Exception e)
 		{

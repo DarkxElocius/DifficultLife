@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -113,123 +114,125 @@ public class DLEventHandler {
 	{
 		if(!event.entityLiving.worldObj.isRemote && !(event.entityLiving instanceof EntityPlayer))
 		{
-			if(event.entityLiving.getAttributeMap() != null)
-			{
-				if(event.entityLiving.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(DLUtils.modifierID) == null)
+			if(EntityList.getEntityString(event.entityLiving) != null && !EntityList.getEntityString(event.entityLiving).isEmpty() && !DLConfigSetup.PERMITTED_FROM_HP_INCREASEMENT.contains(EntityList.getEntityString(event.entityLiving)))
+				if(event.entityLiving.getAttributeMap() != null)
 				{
-					float difficulty = DLSaveStorage.commonGenericTag.getFloat("difficulty");
-					
-					if(event.entityLiving.worldObj.rand.nextFloat() < DLSaveStorage.commonGenericTag.getFloat("difficulty") / DLConfigSetup.DIFFICULTY_MAX * DLConfigSetup.BLIGHT_CHANCE_MULTIPLIER)
+					if(event.entityLiving.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(DLUtils.modifierID) == null)
 					{
-						event.entityLiving.addPotionEffect(new PotionEffect(Potion.invisibility.id,Integer.MAX_VALUE,0,true));
-						event.entityLiving.addPotionEffect(new PotionEffect(Potion.fireResistance.id,Integer.MAX_VALUE,0,true));
-						event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSpeed.id,Integer.MAX_VALUE,8,true));
-						event.entityLiving.addPotionEffect(new PotionEffect(Potion.damageBoost.id,Integer.MAX_VALUE,2,true));
-						if(event.entityLiving instanceof EntityLiving)
-						{
-							EntityLiving entity = (EntityLiving) event.entityLiving;
-				            int i = event.entity.worldObj.rand.nextInt(2);
-				            float f = 0.5F;
-
-				            if (event.entity.worldObj.rand.nextFloat() < 0.095F)
-				            {
-				                ++i;
-				            }
-
-				            if (event.entity.worldObj.rand.nextFloat() < 0.095F)
-				            {
-				                ++i;
-				            }
-
-				            if (event.entity.worldObj.rand.nextFloat() < 0.095F)
-				            {
-				                ++i;
-				            }
-
-				            for (int j = 3; j >= 0; --j)
-				            {
-				                ItemStack itemstack = entity.func_130225_q(j);
-
-				                if (j < 3 && event.entity.worldObj.rand.nextFloat() < f)
-				                {
-				                    break;
-				                }
-
-				                if (itemstack == null)
-				                {
-				                    Item item = EntityLiving.getArmorItemForSlot(j + 1, i);
-
-				                    if (item != null)
-				                    {
-				                        entity.setCurrentItemOrArmor(j + 1, new ItemStack(item));
-				                    }
-				                }
-				            }
-						}
-						for(int i = 0; i < 5; ++i)
-						{
-							ItemStack is = event.entityLiving.getEquipmentInSlot(i);
-							if(is != null)
+						float difficulty = DLSaveStorage.commonGenericTag.getFloat("difficulty");
+						
+						if(!DLConfigSetup.PERMITTED_FROM_BLIGHT.contains(EntityList.getEntityString(event.entityLiving)))
+							if(event.entityLiving.worldObj.rand.nextFloat() < DLSaveStorage.commonGenericTag.getFloat("difficulty") / DLConfigSetup.DIFFICULTY_MAX * DLConfigSetup.BLIGHT_CHANCE_MULTIPLIER)
 							{
-								is = EnchantmentHelper.addRandomEnchantment(event.entityLiving.worldObj.rand, is, 30);
-							}else
-							{
-								
+								event.entityLiving.addPotionEffect(new PotionEffect(Potion.invisibility.id,Integer.MAX_VALUE,0,true));
+								event.entityLiving.addPotionEffect(new PotionEffect(Potion.fireResistance.id,Integer.MAX_VALUE,0,true));
+								event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSpeed.id,Integer.MAX_VALUE,8,true));
+								event.entityLiving.addPotionEffect(new PotionEffect(Potion.damageBoost.id,Integer.MAX_VALUE,2,true));
+								if(event.entityLiving instanceof EntityLiving)
+								{
+									EntityLiving entity = (EntityLiving) event.entityLiving;
+						            int i = event.entity.worldObj.rand.nextInt(2);
+						            float f = 0.5F;
+		
+						            if (event.entity.worldObj.rand.nextFloat() < 0.095F)
+						            {
+						                ++i;
+						            }
+		
+						            if (event.entity.worldObj.rand.nextFloat() < 0.095F)
+						            {
+						                ++i;
+						            }
+		
+						            if (event.entity.worldObj.rand.nextFloat() < 0.095F)
+						            {
+						                ++i;
+						            }
+		
+						            for (int j = 3; j >= 0; --j)
+						            {
+						                ItemStack itemstack = entity.func_130225_q(j);
+		
+						                if (j < 3 && event.entity.worldObj.rand.nextFloat() < f)
+						                {
+						                    break;
+						                }
+		
+						                if (itemstack == null)
+						                {
+						                    Item item = EntityLiving.getArmorItemForSlot(j + 1, i);
+		
+						                    if (item != null)
+						                    {
+						                        entity.setCurrentItemOrArmor(j + 1, new ItemStack(item));
+						                    }
+						                }
+						            }
+								}
+								for(int i = 0; i < 5; ++i)
+								{
+									ItemStack is = event.entityLiving.getEquipmentInSlot(i);
+									if(is != null)
+									{
+										is = EnchantmentHelper.addRandomEnchantment(event.entityLiving.worldObj.rand, is, 30);
+									}else
+									{
+										
+									}
+								}
+								event.entityLiving.setFire(Integer.MAX_VALUE/20);
+								if(event.entityLiving instanceof EntityCreeper)
+								{
+									((EntityCreeper)event.entityLiving).onStruckByLightning(new EntityLightningBolt(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ));
+								}
+								difficulty *= 3;
 							}
-						}
-						event.entityLiving.setFire(Integer.MAX_VALUE/20);
-						if(event.entityLiving instanceof EntityCreeper)
+						
+						float genAddedHealth = difficulty;
+						
+						
+	
+						
+						if(event.entityLiving instanceof IMob)
 						{
-							((EntityCreeper)event.entityLiving).onStruckByLightning(new EntityLightningBolt(event.entityLiving.worldObj, event.entityLiving.posX, event.entityLiving.posY, event.entityLiving.posZ));
+							genAddedHealth *= DLConfigSetup.DIFFICULTY_GENERIC_HEALTH_MULTIPLIER;
+						}else
+						{
+							genAddedHealth *= DLConfigSetup.DIFFICULTY_PEACEFULL_HEALTH_MULTIPLIER;
 						}
-						difficulty *= 3;
-					}
-					
-					float genAddedHealth = difficulty;
-					
-					
-
-					
-					if(event.entityLiving instanceof IMob)
-					{
-						genAddedHealth *= DLConfigSetup.DIFFICULTY_GENERIC_HEALTH_MULTIPLIER;
-					}else
-					{
-						genAddedHealth *= DLConfigSetup.DIFFICULTY_PEACEFULL_HEALTH_MULTIPLIER;
-					}
-					
-					difficulty -= genAddedHealth;
-					
-					if(difficulty > 0)
-					{
-						float randomFlt = event.entityLiving.worldObj.rand.nextFloat();
-						float diffIncrease = difficulty * randomFlt;
-						difficulty -= diffIncrease;
-						genAddedHealth += diffIncrease;
-					}
-					if(event.entityLiving.getEntityAttribute(SharedMonsterAttributes.attackDamage) != null)
+						
+						difficulty -= genAddedHealth;
+						
 						if(difficulty > 0)
 						{
 							float randomFlt = event.entityLiving.worldObj.rand.nextFloat();
 							float diffIncrease = difficulty * randomFlt;
 							difficulty -= diffIncrease;
-							if(event.entityLiving.getEntityAttribute(SharedMonsterAttributes.attackDamage).getModifier(DLUtils.modifierID) == null)
-								event.entityLiving.getEntityAttribute(SharedMonsterAttributes.attackDamage).applyModifier(new AttributeModifier(DLUtils.modifierID, "DL.damageMod", diffIncrease/10, 0));
+							genAddedHealth += diffIncrease;
 						}
-						
-					if(difficulty > 0)
-					{
-						DLPotionEntry e = findRandPotion(event.entityLiving.worldObj.rand,difficulty);
-						if(e != null)
+						if(event.entityLiving.getEntityAttribute(SharedMonsterAttributes.attackDamage) != null)
+							if(difficulty > 0)
+							{
+								float randomFlt = event.entityLiving.worldObj.rand.nextFloat();
+								float diffIncrease = difficulty * randomFlt;
+								difficulty -= diffIncrease;
+								if(event.entityLiving.getEntityAttribute(SharedMonsterAttributes.attackDamage).getModifier(DLUtils.modifierID) == null)
+									event.entityLiving.getEntityAttribute(SharedMonsterAttributes.attackDamage).applyModifier(new AttributeModifier(DLUtils.modifierID, "DL.damageMod", diffIncrease/10, 0));
+							}
+							
+						if(difficulty > 0)
 						{
-							difficulty -= e.weight;
+							DLPotionEntry e = findRandPotion(event.entityLiving.worldObj.rand,difficulty);
+							if(e != null)
+							{
+								difficulty -= e.weight;
+							}
 						}
+						if(event.entityLiving.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(DLUtils.modifierID) == null)
+							event.entityLiving.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(new AttributeModifier(DLUtils.modifierID, "DL.healthMod", genAddedHealth, 0));
+						event.entityLiving.setHealth(event.entityLiving.getMaxHealth());
 					}
-					if(event.entityLiving.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(DLUtils.modifierID) == null)
-						event.entityLiving.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(new AttributeModifier(DLUtils.modifierID, "DL.healthMod", genAddedHealth, 0));
-					event.entityLiving.setHealth(event.entityLiving.getMaxHealth());
 				}
-			}
 		}
 		if(!event.entityLiving.worldObj.isRemote && event.entityLiving instanceof EntityPlayer && DLConfigSetup.ENABLE_CUSTOM_HEALTH_REGEN)
 		{
