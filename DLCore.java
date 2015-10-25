@@ -8,9 +8,11 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import difficultLife.command.setDifficulty;
 import difficultLife.events.DLEventHandler;
 import difficultLife.init.DLConfigSetup;
 import difficultLife.init.DLItems;
@@ -26,7 +28,7 @@ public class DLCore {
 	
 	public static final String modid = "difficultlife";
 	public static final String modname = "Difficult Life";
-	public static final String version = "1.1.1710.11";
+	public static final String version = "1.1.1710.11-UWM";
 	
 	public static SimpleNetworkWrapper networkManager;
 	
@@ -58,9 +60,13 @@ public class DLCore {
 		DLItems.init();
 		DLEventHandler.initPotions();
 		proxy.clientInfo();
+		
 	}
 	
-	
+	@EventHandler
+	public void serverLoad(FMLServerStartingEvent event) {
+		event.registerServerCommand(new setDifficulty());
+	}
 	
 	public static Object[] nObj(Object... objects)
 	{

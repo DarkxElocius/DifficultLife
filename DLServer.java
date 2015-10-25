@@ -2,7 +2,9 @@ package difficultLife;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
+import difficultLife.command.setDifficulty;
 import difficultLife.utils.ContainerVanityArmor;
 
 public class DLServer implements IGuiHandler{

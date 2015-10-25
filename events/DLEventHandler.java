@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -266,7 +267,10 @@ public class DLEventHandler {
 		if(event.side == Side.SERVER && event.world != null && event.world.provider != null && event.world.provider.dimensionId == 0 && event.phase == Phase.START)
 		{
 			float dIncrease = 0;
-			if(event.world.getWorldTime() % 20 == 0)
+			if(event.world.getWorldTime() % 20 == 0 && (
+					 DLConfigSetup.ONLINE_PLAYER_CHECK == 0 || 
+					(DLConfigSetup.ONLINE_PLAYER_CHECK == 1 && MinecraftServer.getServer().getCurrentPlayerCount()>0) || 
+					(DLConfigSetup.ONLINE_PLAYER_CHECK == 2 && event.world.playerEntities.size()>0)))
 			{
 				dIncrease = DLConfigSetup.DIFFICULTY_EACH_TICK;
 			}

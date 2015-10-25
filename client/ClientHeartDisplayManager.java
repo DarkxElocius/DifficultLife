@@ -175,7 +175,7 @@ public class ClientHeartDisplayManager {
 			GL11.glPushMatrix();
 				float scale = 0.5F;
 				GL11.glScalef(scale, scale, scale);
-				renderer.drawStringWithShadow(renderedString, (int)((xBasePos-renderedString.length()*(6)+20)/scale), (int)((yBasePos+3)/scale), 0xaa0000);
+				renderer.drawStringWithShadow(renderedString, (int)((xBasePos-renderedString.length()*(6) + 13)/scale), (int)((yBasePos+2)/scale), 0xaa0000);
 			GL11.glPopMatrix();
 			GL11.glColor3f(1, 1, 1);
 			mc.getTextureManager().bindTexture(icons);
