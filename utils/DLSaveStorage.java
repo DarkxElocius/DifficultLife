@@ -69,6 +69,10 @@ public class DLSaveStorage {
 		}
 	}
 	
+	public static void setDifficulty(Float difficulty) {
+		commonGenericTag.setFloat("difficulty", difficulty);
+	}
+	
 	public static void increasePlayerHeartsBy1(EntityPlayer p)
 	{
 		if(p instanceof EntityPlayerMP)

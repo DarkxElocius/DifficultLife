@@ -12,6 +12,7 @@ import net.minecraftforge.common.config.Configuration;
 
 public class DLConfigSetup {
 	
+	public static int ONLINE_PLAYER_CHECK;
 	public static int PLAYER_HEARTS_GENERIC;
 	public static float DIFFICULTY_MAX;
 	public static float DIFFICULTY_DEFAULT;
@@ -48,8 +49,8 @@ public class DLConfigSetup {
 		try
 		{
 			cfg.load();
+			ONLINE_PLAYER_CHECK = cfg.getInt("onlinePlayerCheck", Configuration.CATEGORY_GENERAL, 1, 0, 2, "Should difficulty increase if always = 0, only if players are online = 1, only if players are in world = 2");
 			PLAYER_HEARTS_GENERIC = cfg.getInt("startingHealth", Configuration.CATEGORY_GENERAL, 10, 0, Integer.MAX_VALUE, "Sets the player starting amount of HEARTS, not HEALTH. Values here will get multiplied by 2 automatically!");
-			
 			DIFFICULTY_MAX = cfg.getFloat("difficultyValueMax", Configuration.CATEGORY_GENERAL, 250, Float.MIN_VALUE, Float.MAX_VALUE, "Sets the maximum difficulty value. Example: 250 means, that at the max difficulty zombies may have up to 400 health.");
 			DIFFICULTY_DEFAULT = cfg.getFloat("difficultyVauleStarting", Configuration.CATEGORY_GENERAL, 0, Float.MIN_VALUE, Float.MAX_VALUE, "Sets the starting difficulty for the world.");
 			DIFFICULTY_EACH_TICK = cfg.getFloat("difficultyValueEachTick", Configuration.CATEGORY_GENERAL, 0.00165562913907284768211920529801F, 0, Float.MAX_VALUE, "The amount of Difficulty added EACH TICK (1/20 of a second)");

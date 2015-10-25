@@ -28,7 +28,7 @@ public class DLCore {
 	
 	public static final String modid = "difficultlife";
 	public static final String modname = "Difficult Life";
-	public static final String version = "1.1.1710.11";
+	public static final String version = "1.1.1710.11-UWM";
 	
 	public static SimpleNetworkWrapper networkManager;
 	

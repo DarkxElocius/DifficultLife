@@ -3,8 +3,6 @@ package difficultLife.utils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-
-import baubles.api.BaubleType;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -96,34 +94,6 @@ public class ContainerVanityArmor extends Container
                     return ItemArmor.func_94602_b(k);
                 }
             });
-        }
-
-        //TODO Baubles integration
-        try
-        {
-        	if(Loader.isModLoaded("Baubles"))
-        	{
-        		Class<?> SlotBauble = Class.forName("baubles.common.container.SlotBauble");
-        		Constructor<?> sbc = SlotBauble.getConstructor(IInventory.class, BaubleType.class, int.class, int.class, int.class);
-        		
-        		Class<?> InventoryBaubles = Class.forName("baubles.common.container.InventoryBaubles");
-        		baubles = IInventory.class.cast(InventoryBaubles.getConstructor(EntityPlayer.class).newInstance(player));
-        		InventoryBaubles.getMethod("setEventHandler", Container.class).invoke(baubles, this);
-        		if(!player.worldObj.isRemote)
-        		{
-        			 Field stackList = InventoryBaubles.getField("stackList");
-        			 Class<?> PlayerHandler = Class.forName("baubles.common.lib.PlayerHandler");
-        			 stackList.set(baubles, stackList.get(PlayerHandler.getMethod("getPlayerBaubles", EntityPlayer.class).invoke(null, player)));
-        		}
-		        addSlotToContainer(Slot.class.cast(sbc.newInstance(baubles, BaubleType.AMULET, 0, 98, 8)));
-		        addSlotToContainer(Slot.class.cast(sbc.newInstance(baubles, BaubleType.RING, 1, 98, 26)));
-		        addSlotToContainer(Slot.class.cast(sbc.newInstance(baubles, BaubleType.RING, 2, 98, 44)));
-		        addSlotToContainer(Slot.class.cast(sbc.newInstance(baubles, BaubleType.BELT, 3, 98, 62)));
-        	}
-        }
-        catch(Exception e)
-        {
-        	//Silently catching error, probably a class misnaming
         }
         
         for(int i = 0; i < 3; i++)
