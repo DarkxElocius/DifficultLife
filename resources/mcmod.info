@@ -1,0 +1,17 @@
+[
+{
+  "modid": "difficultlife",
+  "name": "Difficult Life",
+  "description": "Have you ever thought that your game is too easy?\n Having a tons of mods installed, and mobs are no longer a threat to you?\n Thinking, that armor from some mods (ProjectE) is way too powerfull, and nothing can damage you?\n Well then, this mod is for you!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "logoFile": "",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["TheMysticDark aka DarkxElocius"],
+  "credits": "Special thanks to Modbder",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,0 +1,20 @@
+item.dl.heart.name=Heart Canister
+item.dl.glassHelmet.name=Invisible Helmet
+item.dl.glassChestplate.name=Invisible Chestplate
+item.dl.glassLeggings.name=Invisible Leggings
+item.dl.glassBoots.name=Invisible Boots
+
+dl.veryEasy=Very Easy
+dl.easy=Easy
+dl.medium=Medium
+dl.hard=Hard
+dl.veryHard=Very Hard
+dl.insane=Insane
+dl.impossible=Impossible
+dl.iseeyou=I See You...
+dl.imcomingforyou=I'm Coming For You...
+dl.hahaha=HAHAHAHA
+dl.hahaha+=HAHAHAHA++
+
+button.vanity=Vanity
+button.normal=Inventory
